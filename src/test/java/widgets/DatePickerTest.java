@@ -18,6 +18,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class DatePickerTest extends BaseTest {
@@ -40,11 +41,13 @@ public class DatePickerTest extends BaseTest {
     @FindBy(css = ".ui-state-default.ui-state-highlight")
     WebElement highlighted;
 
-    String[] dates = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018", "05.05.2021", "10.10.2021"};
+    String localDate = convertLocalDate(LocalDate.now().toString());
+    String[] dates = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018", localDate, "10.10.2021"};
     String currentDate;
 
     @BeforeMethod
     public void initializeElements() {
+        System.out.println(localDate);
         driver.get("https://seleniumui.moderntester.pl/datepicker.php");
         PageFactory.initElements(driver, this);
     }
@@ -193,5 +196,10 @@ public class DatePickerTest extends BaseTest {
                 return "12";
         }
         return null;
+    }
+
+    public String convertLocalDate(String localDate) {
+        String[] split = localDate.split("-");
+        return split[2] + "." + split[1] + "." + split[0];
     }
 }
