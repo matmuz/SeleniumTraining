@@ -63,7 +63,7 @@ public class FormTest extends BaseTest {
     }
 
     @Test
-    public void formTest() throws InterruptedException {
+    public void formTest() {
         firstName.sendKeys("Arthur");
         lastName.sendKeys("Morgan");
         email.sendKeys("test@test.com");
