@@ -47,7 +47,6 @@ public class DatePickerTest extends BaseTest {
 
     @BeforeMethod
     public void initializeElements() {
-        System.out.println(localDate);
         driver.get("https://seleniumui.moderntester.pl/datepicker.php");
         PageFactory.initElements(driver, this);
     }
