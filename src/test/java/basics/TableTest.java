@@ -27,7 +27,7 @@ public class TableTest extends BaseTest {
                 if ((column.contains("Switzerland"))) {
                     int height = Integer.parseInt(columns[columns.length - 1]);
                     if (height > 4000) {
-                        System.out.println(columns[0] + " " + columns[1] + " " + columns[2]);
+                        System.out.println(columns[0] + ". " + columns[1] + " - " + columns[2]);
                     }
                 }
             }

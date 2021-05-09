@@ -74,7 +74,7 @@ public class FormTest extends BaseTest {
                 .click();
         selectOptions(continents).selectByIndex(chooseRandom(selectOptions(continents).getOptions()
                                                                      .size()));
-        String[] commandsToCheck = {"Browser Commands", "Wait Commands", "WebElement Commands"};
+        String[] commandsToCheck = {"Browser Commands", "Wait Commands"};
         for (String s : commandsToCheck) {
             selectOptions(commands).selectByVisibleText(s);
         }

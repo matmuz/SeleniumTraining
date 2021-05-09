@@ -54,7 +54,6 @@ public class IFramesTest extends BaseTest {
         firstName.sendKeys("Arthur");
         surname.sendKeys("Morgan");
         signInButton.click();
-
         driver.switchTo()
                 .defaultContent();
         driver.switchTo()
@@ -67,7 +66,6 @@ public class IFramesTest extends BaseTest {
         yearsOfExperienceRadioButtons.get(random.nextInt(yearsOfExperienceRadioButtons.size()))
                 .click();
         signInButton.click();
-
         driver.switchTo().defaultContent();
         driver.findElement(By.cssSelector(".nav-link.dropdown-toggle")).click();
     }
