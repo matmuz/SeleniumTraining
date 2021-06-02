@@ -3,60 +3,59 @@ package basics;
 import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.basics.WindowsAndTabsPage;
 
 import java.util.List;
 import java.util.Set;
 
 public class WindowsAndTabsTest extends BaseTest {
 
-    @FindBy(css = "#newBrowserWindow")
-    WebElement newBrowserWindow;
-
-    @FindBy(css = "#newMessageWindow")
-    WebElement newMessageWindow;
-
-    @FindBy(css = "#newBrowserTab")
-    WebElement newBrowserTab;
 
     @BeforeMethod
-    public void initializeElements(){
+    public void getPage() {
         driver.get("https://seleniumui.moderntester.pl/windows-tabs.php");
-        PageFactory.initElements(driver, this);
     }
 
     @Test
     public void windowsAndTabsTest() {
+        WindowsAndTabsPage page = new WindowsAndTabsPage(driver);
         String firstWindow = driver.getWindowHandle();
-        newBrowserWindow.click();
+        page.newBrowserWindow.click();
         Set<String> handles = driver.getWindowHandles();
-        for (String handle: handles){
-            if (!handle.equals(firstWindow)){
-                driver.switchTo().window(handle);
+        for (String handle : handles) {
+            if (!handle.equals(firstWindow)) {
+                driver.switchTo()
+                        .window(handle);
             }
         }
-        driver.manage().window().maximize();
+        driver.manage()
+                .window()
+                .maximize();
         tableTest();
         driver.close();
-        driver.switchTo().window(firstWindow);
-        newMessageWindow.click();
+        driver.switchTo()
+                .window(firstWindow);
+        page.newMessageWindow.click();
         handles = driver.getWindowHandles();
-        for (String handle: handles){
-            if (!handle.equals(firstWindow)){
-                driver.switchTo().window(handle);
+        for (String handle : handles) {
+            if (!handle.equals(firstWindow)) {
+                driver.switchTo()
+                        .window(handle);
             }
         }
-        System.out.println(driver.findElement(By.cssSelector("body")).getText());
+        System.out.println(driver.findElement(By.cssSelector("body"))
+                                   .getText());
         driver.close();
-        driver.switchTo().window(firstWindow);
-        newBrowserTab.click();
+        driver.switchTo()
+                .window(firstWindow);
+        page.newBrowserTab.click();
         handles = driver.getWindowHandles();
-        for (String handle: handles){
-            if (!handle.equals(firstWindow)){
-                driver.switchTo().window(handle);
+        for (String handle : handles) {
+            if (!handle.equals(firstWindow)) {
+                driver.switchTo()
+                        .window(handle);
             }
         }
         tableTest();

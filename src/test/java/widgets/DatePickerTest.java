@@ -6,12 +6,10 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import pages.widgets.DatePickerPage;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
@@ -23,83 +21,59 @@ import java.util.List;
 
 public class DatePickerTest extends BaseTest {
 
-    @FindBy(css = "#datepicker")
-    WebElement datePickerField;
-
-    @FindBy(css = ".ui-icon.ui-icon-circle-triangle-w")
-    WebElement leftArrow;
-
-    @FindBy(css = ".ui-icon.ui-icon-circle-triangle-e")
-    WebElement rightArrow;
-
-    @FindBy(css = ".ui-datepicker-month")
-    WebElement month;
-
-    @FindBy(css = ".ui-datepicker-year")
-    WebElement year;
-
-    @FindBy(css = ".ui-state-default.ui-state-highlight")
-    WebElement highlighted;
-
-    String localDate = convertLocalDate(LocalDate.now().toString());
+    String localDate = convertLocalDate(LocalDate.now()
+                                                .toString());
     String[] dates = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018", localDate, "10.10.2021"};
     String currentDate;
 
     @BeforeMethod
-    public void initializeElements() {
+    public void getPage() {
         driver.get("https://seleniumui.moderntester.pl/datepicker.php");
-        PageFactory.initElements(driver, this);
     }
 
     @Test
     public void datePickerTest() throws IOException, UnsupportedFlavorException {
         for (int i = 0; i < dates.length; i++) {
-            datePickerField.click();
+            DatePickerPage page = new DatePickerPage(driver);
+            page.datePickerField.click();
             try {
-                currentDate = highlighted.getText() + "." + convertMonthToNumber() + "." + year.getText();
+                currentDate = page.highlighted.getText() + "." + convertMonthToNumber(page) + "." + page.year.getText();
             } catch (NoSuchElementException ignored) {
                 currentDate = driver.findElement(By.cssSelector(".ui-state-default.ui-state-active"))
-                        .getText() + "." + convertMonthToNumber() + "." + year.getText();
+                        .getText() + "." + convertMonthToNumber(page) + "." + page.year.getText();
             }
             String[] date = splitDates(dates, i);
-            if ((Integer.parseInt(date[2])) < (Integer.parseInt(year.getText()))) {
-                goLeft(i);
-            } else if ((Integer.parseInt(date[2])) == (Integer.parseInt(year.getText()))) {
-                if ((Integer.parseInt(date[1])) < (Integer.parseInt(convertMonthToNumber()))) {
-                    goLeft(i);
-                } else if ((Integer.parseInt(date[1])) > (Integer.parseInt(convertMonthToNumber()))) {
-                    goRight(i);
+            if ((Integer.parseInt(date[2])) < (Integer.parseInt(page.year.getText()))) {
+                goLeft(i, page);
+            } else if ((Integer.parseInt(date[2])) == (Integer.parseInt(page.year.getText()))) {
+                if ((Integer.parseInt(date[1])) < (Integer.parseInt(convertMonthToNumber(page)))) {
+                    goLeft(i, page);
+                } else if ((Integer.parseInt(date[1])) > (Integer.parseInt(convertMonthToNumber(page)))) {
+                    goRight(i, page);
                 } else {
                     try {
-                        highlighted.click();
+                        page.highlighted.click();
                     } catch (NoSuchElementException ignored) {
                         driver.findElement(By.cssSelector(".ui-state-default.ui-state-active"))
                                 .click();
                     }
                 }
             } else {
-                goRight(i);
+                goRight(i, page);
             }
-            System.out.println((convertToNonAmericanDate(getDateFromField())) + " compared to: " + dates[i]);
-            Assert.assertEquals((convertToNonAmericanDate(getDateFromField())), dates[i]);
+            System.out.println((convertToNonAmericanDate(getDateFromField(page))) + " compared to: " + dates[i]);
+            Assert.assertEquals((convertToNonAmericanDate(getDateFromField(page))), dates[i]);
         }
     }
 
-    @AfterMethod
-    public void clearDatePickerField() {
-        datePickerField.sendKeys(Keys.BACK_SPACE);
-        driver.findElement(By.cssSelector(".display-4"))
-                .click();
-    }
-
-    public void goLeft(int index) {
+    public void goLeft(int index, DatePickerPage page) {
         while (true) {
-            leftArrow.click();
+            page.leftArrow.click();
             String[] date = splitDates(dates, index);
-            if ((year.getText()
-                    .equals(date[2])) && ((Integer.parseInt(convertMonthToNumber())) ==
+            if ((page.year.getText()
+                    .equals(date[2])) && ((Integer.parseInt(convertMonthToNumber(page))) ==
                     (Integer.parseInt(date[1])))) {
-                List<WebElement> listOfDays = getListOfDays();
+                List<WebElement> listOfDays = getListOfDays(page);
                 for (WebElement listOfDay : listOfDays) {
                     if (((Integer.parseInt(listOfDay.getText())) == (Integer.parseInt(date[0])))) {
                         listOfDay
@@ -112,14 +86,14 @@ public class DatePickerTest extends BaseTest {
         }
     }
 
-    public void goRight(int index) {
+    public void goRight(int index, DatePickerPage page) {
         while (true) {
-            rightArrow.click();
+            page.rightArrow.click();
             String[] date = splitDates(dates, index);
-            if ((year.getText()
-                    .equals(date[2])) && ((Integer.parseInt(convertMonthToNumber())) ==
+            if ((page.year.getText()
+                    .equals(date[2])) && ((Integer.parseInt(convertMonthToNumber(page))) ==
                     (Integer.parseInt(date[1])))) {
-                List<WebElement> listOfDays = getListOfDays();
+                List<WebElement> listOfDays = getListOfDays(page);
                 for (WebElement listOfDay : listOfDays) {
                     if ((Integer.parseInt(listOfDay.getText())) == (Integer.parseInt(date[0]))) {
                         listOfDay
@@ -140,13 +114,13 @@ public class DatePickerTest extends BaseTest {
         return new String[]{day, month, year};
     }
 
-    public String getDateFromField() throws IOException, UnsupportedFlavorException {
+    public String getDateFromField(DatePickerPage page) throws IOException, UnsupportedFlavorException {
         Actions actions = new Actions(driver);
-        actions.click(datePickerField)
-                .doubleClick(datePickerField)
+        actions.click(page.datePickerField)
+                .doubleClick(page.datePickerField)
                 .build()
                 .perform();
-        datePickerField.sendKeys(Keys.chord(Keys.CONTROL, "c"));
+        page.datePickerField.sendKeys(Keys.chord(Keys.CONTROL, "c"));
         Clipboard clipboard = Toolkit.getDefaultToolkit()
                 .getSystemClipboard();
         DataFlavor dataFlavor = DataFlavor.stringFlavor;
@@ -162,13 +136,13 @@ public class DatePickerTest extends BaseTest {
         return split[0] + "." + split[1] + "." + split[2];
     }
 
-    public List<WebElement> getListOfDays() {
-        int month = (Integer.parseInt(convertMonthToNumber())) - 1;
+    public List<WebElement> getListOfDays(DatePickerPage page) {
+        int month = (Integer.parseInt(convertMonthToNumber(page))) - 1;
         return driver.findElements(By.cssSelector("td[data-month='" + month + "']"));
     }
 
-    public String convertMonthToNumber() {
-        switch (month.getText()) {
+    public String convertMonthToNumber(DatePickerPage page) {
+        switch (page.month.getText()) {
             case "January":
                 return "1";
             case "February":
