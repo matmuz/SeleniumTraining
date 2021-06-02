@@ -19,8 +19,13 @@ public class FormTest extends BaseTest {
         driver.get("https://seleniumui.moderntester.pl/form.php");
     }
 
+    /*
+        For this test to work please provide an absolute path (String filePath) for a file (e.g. test.txt file in your desktop location)
+     */
+
     @Test
     public void formTest() {
+        String filePath = "";
         FormPage page = new FormPage(driver);
         page.firstName.sendKeys("Arthur");
         page.lastName.sendKeys("Morgan");
@@ -36,7 +41,7 @@ public class FormTest extends BaseTest {
         for (String s : commandsToCheck) {
             selectOptions(page.commands).selectByVisibleText(s);
         }
-        page.filePath.sendKeys("C:\\Users\\mateu\\Desktop\\Pliki\\test.txt");
+        page.filePath.sendKeys(filePath);
         page.additionalInfo.sendKeys("This is a test");
         page.signInButton.click();
         Assert.assertEquals(page.validatorMessage.getText(), "Form send with success");
