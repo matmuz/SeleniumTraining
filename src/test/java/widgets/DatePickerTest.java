@@ -21,6 +21,8 @@ import java.util.List;
 
 public class DatePickerTest extends BaseTest {
 
+    static final String LEFT = "left";
+    static final String RIGHT = "right";
     String localDate = convertLocalDate(LocalDate.now()
                                                 .toString());
     String[] dates = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018", localDate, "10.10.2021"};
@@ -44,12 +46,12 @@ public class DatePickerTest extends BaseTest {
             }
             String[] date = splitDates(dates, i);
             if ((Integer.parseInt(date[2])) < (Integer.parseInt(page.year.getText()))) {
-                goLeft(i, page);
+                goIntoDirection(i, page, LEFT);
             } else if ((Integer.parseInt(date[2])) == (Integer.parseInt(page.year.getText()))) {
                 if ((Integer.parseInt(date[1])) < (Integer.parseInt(convertMonthToNumber(page)))) {
-                    goLeft(i, page);
+                    goIntoDirection(i, page, LEFT);
                 } else if ((Integer.parseInt(date[1])) > (Integer.parseInt(convertMonthToNumber(page)))) {
-                    goRight(i, page);
+                    goIntoDirection(i, page, RIGHT);
                 } else {
                     try {
                         page.highlighted.click();
@@ -59,16 +61,22 @@ public class DatePickerTest extends BaseTest {
                     }
                 }
             } else {
-                goRight(i, page);
+                goIntoDirection(i, page, RIGHT);
             }
             System.out.println((convertToNonAmericanDate(getDateFromField(page))) + " compared to: " + dates[i]);
             Assert.assertEquals((convertToNonAmericanDate(getDateFromField(page))), dates[i]);
         }
     }
 
-    public void goLeft(int index, DatePickerPage page) {
+    public void goIntoDirection(int index, DatePickerPage page, String direction) {
         while (true) {
-            page.leftArrow.click();
+            if (direction.equals(LEFT)) {
+                page.leftArrow.click();
+            } else if (direction.equals(RIGHT)) {
+                page.rightArrow.click();
+            } else {
+                throw new RuntimeException("Unsupported direction passed to the direction parameter");
+            }
             String[] date = splitDates(dates, index);
             if ((page.year.getText()
                     .equals(date[2])) && ((Integer.parseInt(convertMonthToNumber(page))) ==
@@ -76,26 +84,6 @@ public class DatePickerTest extends BaseTest {
                 List<WebElement> listOfDays = getListOfDays(page);
                 for (WebElement listOfDay : listOfDays) {
                     if (((Integer.parseInt(listOfDay.getText())) == (Integer.parseInt(date[0])))) {
-                        listOfDay
-                                .click();
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-    public void goRight(int index, DatePickerPage page) {
-        while (true) {
-            page.rightArrow.click();
-            String[] date = splitDates(dates, index);
-            if ((page.year.getText()
-                    .equals(date[2])) && ((Integer.parseInt(convertMonthToNumber(page))) ==
-                    (Integer.parseInt(date[1])))) {
-                List<WebElement> listOfDays = getListOfDays(page);
-                for (WebElement listOfDay : listOfDays) {
-                    if ((Integer.parseInt(listOfDay.getText())) == (Integer.parseInt(date[0]))) {
                         listOfDay
                                 .click();
                         break;
