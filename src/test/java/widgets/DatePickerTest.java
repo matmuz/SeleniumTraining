@@ -17,16 +17,18 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 
 public class DatePickerTest extends BaseTest {
 
     static final String LEFT = "left";
     static final String RIGHT = "right";
-    String localDate = convertLocalDate(LocalDate.now()
+    static final List<Month> MONTHS = Arrays.asList(Month.values());
+    String localDate = reverseLocalDate(LocalDate.now()
                                                 .toString());
-    String[] dates = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018", localDate, "10.10.2021"};
-    String currentDate;
+    String[] datesToCheck = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018", localDate, "10.10.2021"};
 
     @BeforeMethod
     public void getPage() {
@@ -35,23 +37,17 @@ public class DatePickerTest extends BaseTest {
 
     @Test
     public void datePickerTest() throws IOException, UnsupportedFlavorException {
-        for (int i = 0; i < dates.length; i++) {
+        for (int i = 0; i < datesToCheck.length; i++) {
             DatePickerPage page = new DatePickerPage(driver);
             page.datePickerField.click();
-            try {
-                currentDate = page.highlighted.getText() + "." + convertMonthToNumber(page) + "." + page.year.getText();
-            } catch (NoSuchElementException ignored) {
-                currentDate = driver.findElement(By.cssSelector(".ui-state-default.ui-state-active"))
-                        .getText() + "." + convertMonthToNumber(page) + "." + page.year.getText();
-            }
-            String[] date = splitDates(dates, i);
+            String[] date = splitTestedDate(datesToCheck, i);
             if ((Integer.parseInt(date[2])) < (Integer.parseInt(page.year.getText()))) {
-                goIntoDirection(i, page, LEFT);
+                moveIntoDesiredDirection(i, page, LEFT);
             } else if ((Integer.parseInt(date[2])) == (Integer.parseInt(page.year.getText()))) {
                 if ((Integer.parseInt(date[1])) < (Integer.parseInt(convertMonthToNumber(page)))) {
-                    goIntoDirection(i, page, LEFT);
+                    moveIntoDesiredDirection(i, page, LEFT);
                 } else if ((Integer.parseInt(date[1])) > (Integer.parseInt(convertMonthToNumber(page)))) {
-                    goIntoDirection(i, page, RIGHT);
+                    moveIntoDesiredDirection(i, page, RIGHT);
                 } else {
                     try {
                         page.highlighted.click();
@@ -61,14 +57,14 @@ public class DatePickerTest extends BaseTest {
                     }
                 }
             } else {
-                goIntoDirection(i, page, RIGHT);
+                moveIntoDesiredDirection(i, page, RIGHT);
             }
-            System.out.println((convertToNonAmericanDate(getDateFromField(page))) + " compared to: " + dates[i]);
-            Assert.assertEquals((convertToNonAmericanDate(getDateFromField(page))), dates[i]);
+            System.out.println((convertToNonAmericanDate(getDateFromField(page))) + " compared to: " + datesToCheck[i]);
+            Assert.assertEquals((convertToNonAmericanDate(getDateFromField(page))), datesToCheck[i]);
         }
     }
 
-    public void goIntoDirection(int index, DatePickerPage page, String direction) {
+    public void moveIntoDesiredDirection(int index, DatePickerPage page, String direction) {
         while (true) {
             if (direction.equals(LEFT)) {
                 page.leftArrow.click();
@@ -77,7 +73,7 @@ public class DatePickerTest extends BaseTest {
             } else {
                 throw new RuntimeException("Unsupported direction passed to the direction parameter");
             }
-            String[] date = splitDates(dates, index);
+            String[] date = splitTestedDate(datesToCheck, index);
             if ((page.year.getText()
                     .equals(date[2])) && ((Integer.parseInt(convertMonthToNumber(page))) ==
                     (Integer.parseInt(date[1])))) {
@@ -94,11 +90,11 @@ public class DatePickerTest extends BaseTest {
         }
     }
 
-    public String[] splitDates(String[] dates, int index) {
-        String[] split = dates[index].split("\\.");
-        String day = split[0];
-        String month = split[1];
-        String year = split[2];
+    public String[] splitTestedDate(String[] dates, int index) {
+        String[] data = dates[index].split("\\.");
+        String day = data[0];
+        String month = data[1];
+        String year = data[2];
         return new String[]{day, month, year};
     }
 
@@ -117,11 +113,11 @@ public class DatePickerTest extends BaseTest {
     }
 
     public String convertToNonAmericanDate(String dateFromField) {
-        String[] split = dateFromField.split("\\.");
-        String temp = split[0];
-        split[0] = split[1];
-        split[1] = temp;
-        return split[0] + "." + split[1] + "." + split[2];
+        String[] data = dateFromField.split("\\.");
+        String temp = data[0];
+        data[0] = data[1];
+        data[1] = temp;
+        return data[0] + "." + data[1] + "." + data[2];
     }
 
     public List<WebElement> getListOfDays(DatePickerPage page) {
@@ -130,37 +126,20 @@ public class DatePickerTest extends BaseTest {
     }
 
     public String convertMonthToNumber(DatePickerPage page) {
-        switch (page.month.getText()) {
-            case "January":
-                return "1";
-            case "February":
-                return "2";
-            case "March":
-                return "3";
-            case "April":
-                return "4";
-            case "May":
-                return "5";
-            case "June":
-                return "6";
-            case "July":
-                return "7";
-            case "August":
-                return "8";
-            case "September":
-                return "9";
-            case "October":
-                return "10";
-            case "November":
-                return "11";
-            case "December":
-                return "12";
+        String month = page.month.getText()
+                .toUpperCase();
+        for (Month MONTH : MONTHS) {
+            if (MONTH.toString()
+                    .equals(month)) {
+                return String.valueOf(MONTH.getValue());
+            }
         }
         return null;
+
     }
 
-    public String convertLocalDate(String localDate) {
-        String[] split = localDate.split("-");
-        return split[2] + "." + split[1] + "." + split[0];
+    public String reverseLocalDate(String localDate) {
+        String[] data = localDate.split("-");
+        return data[2] + "." + data[1] + "." + data[0];
     }
 }
