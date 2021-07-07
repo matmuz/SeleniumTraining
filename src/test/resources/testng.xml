@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="SeleniumTraining" thread-count="3" parallel="methods">
+
+    <test name="Actions">
+        <classes>
+            <class name="actions.DraggableTest"/>
+            <class name="actions.DroppableTest"/>
+            <class name="actions.ResizableTest"/>
+            <class name="actions.SelectableTest"/>
+            <class name="actions.SortableTest"/>
+        </classes>
+    </test>
+
+    <test name="Basics">
+        <classes>
+            <class name="basics.AlertsTests"/>
+            <class name="basics.FormTest"/>
+            <class name="basics.IFramesTest"/>
+            <class name="basics.TableTest"/>
+            <class name="basics.WindowsAndTabsTest"/>
+        </classes>
+    </test>
+
+    <test name="Others">
+        <classes>
+            <class name="others.HighSiteTest"/>
+        </classes>
+    </test>
+
+    <test name="Widgets">
+        <classes>
+            <class name="widgets.AccordionTest"/>
+            <class name="widgets.AutocompleteTest"/>
+            <class name="widgets.DatePickerTest"/>
+            <class name="widgets.MenuTest"/>
+            <class name="widgets.ModalDialogTest"/>
+            <class name="widgets.ProgressbarTest"/>
+            <class name="widgets.SelectableTest"/>
+            <class name="widgets.SliderTest"/>
+            <class name="widgets.TooltipTest"/>
+        </classes>
+    </test>
+
+</suite>
