@@ -35,10 +35,10 @@ public class SortableTest extends BaseTest {
                 for (int y = 0; y < page.sortableObjects.size(); y++) {
                     if (getNumberFromWebElement(page.sortableObjects, y) == numbers.get(i)) {
                         actions.clickAndHold(page.sortableObjects.get(y))
-                                .moveToElement(page.sortableObjects.get(i))
-                                .release()
-                                .build()
-                                .perform();
+                               .moveToElement(page.sortableObjects.get(i))
+                               .release()
+                               .build()
+                               .perform();
                     }
                 }
             }
@@ -51,9 +51,7 @@ public class SortableTest extends BaseTest {
     }
 
     public int getNumberFromWebElement(List<WebElement> webElements, int index) {
-        String[] split = webElements.get(index)
-                .getText()
-                .split(" ");
+        String[] split = webElements.get(index).getText().split(" ");
         return Integer.parseInt(split[1]);
     }
 }

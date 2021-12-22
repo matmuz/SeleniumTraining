@@ -22,34 +22,28 @@ public class AlertsTests extends BaseTest {
         AlertsPage page = new AlertsPage(driver);
 
         page.simpleAlert.click();
-        driver.switchTo()
-                .alert()
-                .accept();
+        driver.switchTo().alert().accept();
         Assert.assertEquals(page.simpleAlertLabel.getText(), "OK button pressed");
 
         page.promptAlert.click();
-        Alert temp = driver.switchTo()
-                .alert();
+        Alert temp = driver.switchTo().alert();
         temp.sendKeys("Lord Voldemort");
         temp.accept();
         Assert.assertEquals(page.promptLabel.getText(), "Hello Lord Voldemort! How are you today?");
 
         page.confirmAlert.click();
-        temp = driver.switchTo()
-                .alert();
+        temp = driver.switchTo().alert();
         temp.accept();
         Assert.assertEquals(page.confirmLabel.getText(), "You pressed OK!");
         page.confirmAlert.click();
-        temp = driver.switchTo()
-                .alert();
+        temp = driver.switchTo().alert();
         temp.dismiss();
         Assert.assertEquals(page.confirmLabel.getText(), "You pressed Cancel!");
 
         page.delayedAlert.click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.alertIsPresent());
-        temp = driver.switchTo()
-                .alert();
+        temp = driver.switchTo().alert();
         temp.accept();
         Assert.assertEquals(page.delayedLabel.getText(), "OK button pressed");
     }

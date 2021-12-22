@@ -22,7 +22,6 @@ public class FormTest extends BaseTest {
     /*
         For this test to work please provide an absolute path (String filePath) for a file (e.g. test.txt file in your desktop location)
      */
-
     @Test
     public void formTest() {
         String filePath = "";
@@ -33,10 +32,8 @@ public class FormTest extends BaseTest {
         chooseRandom(page.sexRadioButtons);
         page.age.sendKeys("26");
         chooseRandom(page.yearsOfExperienceRadioButtons);
-        page.professionRadioButtons.get(1)
-                .click();
-        selectOptions(page.continents).selectByIndex(chooseRandom(selectOptions(page.continents).getOptions()
-                                                                          .size()));
+        page.professionRadioButtons.get(1).click();
+        selectOptions(page.continents).selectByIndex(chooseRandom(selectOptions(page.continents).getOptions().size()));
         String[] commandsToCheck = {"Browser Commands", "Wait Commands"};
         for (String s : commandsToCheck) {
             selectOptions(page.commands).selectByVisibleText(s);
@@ -49,8 +46,7 @@ public class FormTest extends BaseTest {
 
     public void chooseRandom(List<WebElement> radios) {
         Random random = new Random();
-        radios.get(random.nextInt(radios.size()))
-                .click();
+        radios.get(random.nextInt(radios.size())).click();
     }
 
     public int chooseRandom(int size) {

@@ -24,21 +24,16 @@ public class ModalDialogTest extends BaseTest {
     public void modalDialogTest(String parameterName, String parameterEmail, String parameterPassword) {
         ModalDialogPage page = new ModalDialogPage(driver);
         page.createNewUserButton.click();
-        driver.switchTo()
-                .activeElement();
+        driver.switchTo().activeElement();
         page.name.clear();
         page.email.clear();
         page.password.clear();
         page.name.sendKeys(parameterName);
         page.email.sendKeys(parameterEmail);
         page.password.sendKeys(parameterPassword);
-        page.dialogButtons.get(1)
-                .click();
-        Assert.assertEquals(parameterName, page.createdUserDetails.get(0)
-                .getText());
-        Assert.assertEquals(parameterEmail, page.createdUserDetails.get(1)
-                .getText());
-        Assert.assertEquals(parameterPassword, page.createdUserDetails.get(2)
-                .getText());
+        page.dialogButtons.get(1).click();
+        Assert.assertEquals(parameterName, page.createdUserDetails.get(0).getText());
+        Assert.assertEquals(parameterEmail, page.createdUserDetails.get(1).getText());
+        Assert.assertEquals(parameterPassword, page.createdUserDetails.get(2).getText());
     }
 }

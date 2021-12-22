@@ -12,7 +12,6 @@ import pages.actions.SelectablePage;
 public class SelectableTest extends BaseTest {
 
 
-
     @BeforeMethod
     public void getPage() {
         driver.get("https://seleniumui.moderntester.pl/selectable.php");
@@ -23,17 +22,9 @@ public class SelectableTest extends BaseTest {
         SelectablePage page = new SelectablePage(driver);
         Actions actions = new Actions(driver);
         for (WebElement selectableObject : page.selectableObjects) {
-            if (selectableObject
-                    .getText()
-                    .contains("1") || selectableObject
-                    .getText()
-                    .contains("3") || selectableObject
-                    .getText()
-                    .contains("4")) {
-                actions.keyDown(Keys.CONTROL)
-                        .click(selectableObject)
-                        .build()
-                        .perform();
+            if (selectableObject.getText().contains("1") || selectableObject.getText().contains("3") ||
+                    selectableObject.getText().contains("4")) {
+                actions.keyDown(Keys.CONTROL).click(selectableObject).build().perform();
             }
         }
         Assert.assertEquals(page.feedback.getText(), "You've selected: #1 #3 #4.");

@@ -28,11 +28,11 @@ public class HighSiteTest extends BaseTest {
             try {
                 if (wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#scroll-button"))))
                         .isDisplayed()) {
-                    driver.findElement(By.cssSelector("#scroll-button"))
-                            .click();
+                    driver.findElement(By.cssSelector("#scroll-button")).click();
                     done = true;
                 }
-            } catch (NoSuchElementException ignored) {
+            } catch (NoSuchElementException exception) {
+                exception.printStackTrace();
             }
         }
     }

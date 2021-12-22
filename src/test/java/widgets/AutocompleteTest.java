@@ -37,8 +37,7 @@ public class AutocompleteTest extends BaseTest {
         options.get(option).click();
         search.sendKeys(Keys.CONTROL, "a");
         search.sendKeys(Keys.CONTROL, "c");
-        Clipboard clipboard = Toolkit.getDefaultToolkit()
-                .getSystemClipboard();
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         DataFlavor dataFlavor = DataFlavor.stringFlavor;
         String optionsText = (String) clipboard.getData(dataFlavor);
         Assert.assertEquals(optionsText, stringOption);

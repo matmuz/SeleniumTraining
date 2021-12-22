@@ -11,13 +11,15 @@ import org.testng.annotations.Test;
 public class ProgressbarTest extends BaseTest {
 
     @BeforeMethod
-    public void getPage(){
+    public void getPage() {
         driver.get("https://seleniumui.moderntester.pl/progressbar.php");
     }
 
     @Test
-    public void progressbarTest(){
+    public void progressbarTest() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
-        Assert.assertTrue(wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(By.cssSelector("#progressbar")), "Complete!")));
+        Assert.assertTrue(wait.until(
+                ExpectedConditions.textToBePresentInElement(driver.findElement(By.cssSelector("#progressbar")),
+                                                            "Complete!")));
     }
 }

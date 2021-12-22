@@ -20,9 +20,7 @@ public class TableTest extends BaseTest {
         List<WebElement> peaks = driver.findElements(By.cssSelector("tr"));
         clearRedundantElements(peaks);
         for (WebElement peak : peaks) {
-            String[] columns = peak
-                    .getText()
-                    .split(" ");
+            String[] columns = peak.getText().split(" ");
             for (String column : columns) {
                 if ((column.contains("Switzerland"))) {
                     int height = Integer.parseInt(columns[columns.length - 1]);
@@ -35,7 +33,6 @@ public class TableTest extends BaseTest {
     }
 
     public void clearRedundantElements(List<WebElement> list) {
-        list.subList(0, 2)
-                .clear();
+        list.subList(0, 2).clear();
     }
 }

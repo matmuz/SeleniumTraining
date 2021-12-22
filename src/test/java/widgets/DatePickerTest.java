@@ -26,8 +26,7 @@ public class DatePickerTest extends BaseTest {
     public void datePickerTest() throws IOException, UnsupportedFlavorException {
 
         DatePickerPage page = new DatePickerPage(driver);
-        String localDate = page.reverseLocalDate(LocalDate.now()
-                                                         .toString());
+        String localDate = page.reverseLocalDate(LocalDate.now().toString());
         String[] datesToCheck = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018", localDate, "10.10.2021"};
 
         for (int i = 0; i < datesToCheck.length; i++) {
@@ -44,8 +43,7 @@ public class DatePickerTest extends BaseTest {
                     try {
                         page.highlighted.click();
                     } catch (NoSuchElementException ignored) {
-                        driver.findElement(By.cssSelector(".ui-state-default.ui-state-active"))
-                                .click();
+                        driver.findElement(By.cssSelector(".ui-state-default.ui-state-active")).click();
                     }
                 }
             } else {

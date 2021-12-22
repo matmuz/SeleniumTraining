@@ -13,6 +13,9 @@ public class DraggableTest extends BaseTest {
         driver.get("https://seleniumui.moderntester.pl/draggable.php");
     }
 
+    /*
+        This test will work only for FHD resolution (1920x1080)
+     */
     @Test
     public void draggableTest() {
         Actions actions = new Actions(driver);

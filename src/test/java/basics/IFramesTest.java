@@ -19,26 +19,20 @@ public class IFramesTest extends BaseTest {
     @Test
     public void iFramesTest() {
         IFramesPage page = new IFramesPage(driver);
-        driver.switchTo()
-                .frame(page.firstIFrame);
+        driver.switchTo().frame(page.firstIFrame);
         page.firstName.sendKeys("Arthur");
         page.surname.sendKeys("Morgan");
         page.signInButton.click();
-        driver.switchTo()
-                .defaultContent();
-        driver.switchTo()
-                .frame(page.secondIFrame);
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame(page.secondIFrame);
         page.login.sendKeys("mat");
         page.password.sendKeys("test123");
         Select select = new Select(page.selectContinents);
         select.selectByValue("europe");
         Random random = new Random();
-        page.yearsOfExperienceRadioButtons.get(random.nextInt(page.yearsOfExperienceRadioButtons.size()))
-                .click();
+        page.yearsOfExperienceRadioButtons.get(random.nextInt(page.yearsOfExperienceRadioButtons.size())).click();
         page.signInButton.click();
-        driver.switchTo()
-                .defaultContent();
-        driver.findElement(By.cssSelector(".nav-link.dropdown-toggle"))
-                .click();
+        driver.switchTo().defaultContent();
+        driver.findElement(By.cssSelector(".nav-link.dropdown-toggle")).click();
     }
 }

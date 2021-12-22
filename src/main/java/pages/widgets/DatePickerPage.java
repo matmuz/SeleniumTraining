@@ -56,14 +56,12 @@ public class DatePickerPage extends BasePage {
                 throw new RuntimeException("Unsupported direction passed to the direction parameter");
             }
             String[] date = splitTestedDate(datesToCheck, index);
-            if ((page.year.getText()
-                    .equals(date[2])) && ((Integer.parseInt(convertMonthToNumber(page))) ==
+            if ((page.year.getText().equals(date[2])) && ((Integer.parseInt(convertMonthToNumber(page))) ==
                     (Integer.parseInt(date[1])))) {
                 List<WebElement> listOfDays = getListOfDays(page);
                 for (WebElement listOfDay : listOfDays) {
                     if (((Integer.parseInt(listOfDay.getText())) == (Integer.parseInt(date[0])))) {
-                        listOfDay
-                                .click();
+                        listOfDay.click();
                         break;
                     }
                 }
@@ -82,13 +80,9 @@ public class DatePickerPage extends BasePage {
 
     public String getDateFromField(DatePickerPage page) throws IOException, UnsupportedFlavorException {
         Actions actions = new Actions(driver);
-        actions.click(page.datePickerField)
-                .doubleClick(page.datePickerField)
-                .build()
-                .perform();
+        actions.click(page.datePickerField).doubleClick(page.datePickerField).build().perform();
         page.datePickerField.sendKeys(Keys.chord(Keys.CONTROL, "c"));
-        Clipboard clipboard = Toolkit.getDefaultToolkit()
-                .getSystemClipboard();
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         DataFlavor dataFlavor = DataFlavor.stringFlavor;
         String date = (String) clipboard.getData(dataFlavor);
         return date.replaceAll("/", "\\.");
@@ -108,11 +102,9 @@ public class DatePickerPage extends BasePage {
     }
 
     public String convertMonthToNumber(DatePickerPage page) {
-        String month = page.month.getText()
-                .toUpperCase();
+        String month = page.month.getText().toUpperCase();
         for (Month MONTH : MONTHS) {
-            if (MONTH.toString()
-                    .equals(month)) {
+            if (MONTH.toString().equals(month)) {
                 return String.valueOf(MONTH.getValue());
             }
         }

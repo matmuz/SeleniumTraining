@@ -16,7 +16,7 @@ public class SelectableTest extends BaseTest {
     }
 
     /*
-        Currently there seems to be an issue with this page.
+        Currently, there seems to be an issue with this page.
         The test should utilize Select class, but such selectors are not working.
      */
 
@@ -39,7 +39,6 @@ public class SelectableTest extends BaseTest {
         select.selectByIndex(5);
         page.selectSalutation.click();
         select = new Select(page.selectSalutation);
-        select.selectByIndex(random.nextInt(select.getOptions()
-                                                    .size()));
+        select.selectByIndex(random.nextInt(select.getOptions().size()));
     }
 }
