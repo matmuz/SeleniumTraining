@@ -31,8 +31,7 @@ public class HighSiteTest extends BaseTest {
                     driver.findElement(By.cssSelector("#scroll-button")).click();
                     done = true;
                 }
-            } catch (NoSuchElementException exception) {
-                exception.printStackTrace();
+            } catch (NoSuchElementException ignored) {
             }
         }
     }
