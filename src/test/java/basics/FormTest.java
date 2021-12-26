@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.basics.FormPage;
 
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 
@@ -19,12 +20,10 @@ public class FormTest extends BaseTest {
         driver.get("https://seleniumui.moderntester.pl/form.php");
     }
 
-    /*
-        For this test to work please provide an absolute path (String filePath) for a file (e.g. test.txt file in your desktop location)
-     */
     @Test
     public void formTest() {
-        String filePath = "";
+        File testFile = new File("src/test/resources/docTestPDFFill.pdf");
+        String filePath =  testFile.getAbsolutePath();
         FormPage page = new FormPage(driver);
         page.firstName.sendKeys("Arthur");
         page.lastName.sendKeys("Morgan");
