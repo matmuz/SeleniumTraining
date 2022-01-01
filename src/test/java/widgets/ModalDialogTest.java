@@ -22,18 +22,19 @@ public class ModalDialogTest extends BaseTest {
 
     @Test(dataProvider = "data-provider")
     public void modalDialogTest(String parameterName, String parameterEmail, String parameterPassword) {
-        ModalDialogPage page = new ModalDialogPage(driver);
-        page.createNewUserButton.click();
+        ModalDialogPage modalDialogPage = new ModalDialogPage(driver);
+
+        modalDialogPage.createNewUserButton.click();
         driver.switchTo().activeElement();
-        page.name.clear();
-        page.email.clear();
-        page.password.clear();
-        page.name.sendKeys(parameterName);
-        page.email.sendKeys(parameterEmail);
-        page.password.sendKeys(parameterPassword);
-        page.dialogButtons.get(1).click();
-        Assert.assertEquals(parameterName, page.createdUserDetails.get(0).getText());
-        Assert.assertEquals(parameterEmail, page.createdUserDetails.get(1).getText());
-        Assert.assertEquals(parameterPassword, page.createdUserDetails.get(2).getText());
+        modalDialogPage.name.clear();
+        modalDialogPage.email.clear();
+        modalDialogPage.password.clear();
+        modalDialogPage.name.sendKeys(parameterName);
+        modalDialogPage.email.sendKeys(parameterEmail);
+        modalDialogPage.password.sendKeys(parameterPassword);
+        modalDialogPage.dialogButtons.get(1).click();
+        Assert.assertEquals(parameterName, modalDialogPage.createdUserDetails.get(0).getText());
+        Assert.assertEquals(parameterEmail, modalDialogPage.createdUserDetails.get(1).getText());
+        Assert.assertEquals(parameterPassword, modalDialogPage.createdUserDetails.get(2).getText());
     }
 }

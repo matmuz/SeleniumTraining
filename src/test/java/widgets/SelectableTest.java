@@ -26,19 +26,19 @@ public class SelectableTest extends BaseTest {
         if (issue) {
             return;
         }
-        SelectablePage page = new SelectablePage(driver);
+        SelectablePage selectablePage = new SelectablePage(driver);
+
         Random random = new Random();
-        Select select = new Select(page.selectSpeed);
-        select.selectByIndex(random.nextInt(select.getOptions()
-                                                    .size()));
-        page.selectFiles.click();
-        select = new Select(page.selectFiles);
-        select.selectByVisibleText("Some unknown file");
-        page.selectNumbers.click();
-        select = new Select(page.selectNumbers);
-        select.selectByIndex(5);
-        page.selectSalutation.click();
-        select = new Select(page.selectSalutation);
-        select.selectByIndex(random.nextInt(select.getOptions().size()));
+        Select selectContainer = new Select(selectablePage.selectSpeed);
+        selectContainer.selectByIndex(random.nextInt(selectContainer.getOptions().size()));
+        selectablePage.selectFiles.click();
+        selectContainer = new Select(selectablePage.selectFiles);
+        selectContainer.selectByVisibleText("Some unknown file");
+        selectablePage.selectNumbers.click();
+        selectContainer = new Select(selectablePage.selectNumbers);
+        selectContainer.selectByIndex(5);
+        selectablePage.selectSalutation.click();
+        selectContainer = new Select(selectablePage.selectSalutation);
+        selectContainer.selectByIndex(random.nextInt(selectContainer.getOptions().size()));
     }
 }

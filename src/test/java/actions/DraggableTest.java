@@ -18,8 +18,7 @@ public class DraggableTest extends BaseTest {
      */
     @Test
     public void draggableTest() {
-        Actions actions = new Actions(driver);
-        actions.clickAndHold(driver.findElement(By.cssSelector("#draggable")))
+        new Actions(driver).clickAndHold(driver.findElement(By.cssSelector("#draggable")))
                 .moveByOffset(1350, -150)
                 .moveByOffset(0, 750)
                 .moveByOffset(-900, -400)

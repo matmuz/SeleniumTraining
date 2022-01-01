@@ -15,13 +15,13 @@ public class ResizableTest extends BaseTest {
 
     @Test
     public void resizableTest() {
-        Actions actions = new Actions(driver);
-        actions.clickAndHold(driver.findElement(By.cssSelector(".ui-resizable-handle.ui-resizable-se.ui-icon.ui-icon-gripsmall-diagonal-se")))
-               .moveByOffset(100, 0)
-               .moveByOffset(0, 100)
-               .moveByOffset(100, 100)
-               .release()
-               .build()
-               .perform();
+        new Actions(driver).clickAndHold(driver.findElement(
+                                   By.cssSelector(".ui-resizable-handle.ui-resizable-se.ui-icon.ui-icon-gripsmall-diagonal-se")))
+                           .moveByOffset(100, 0)
+                           .moveByOffset(0, 100)
+                           .moveByOffset(100, 100)
+                           .release()
+                           .build()
+                           .perform();
     }
 }

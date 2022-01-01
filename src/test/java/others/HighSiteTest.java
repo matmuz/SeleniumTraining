@@ -21,13 +21,13 @@ public class HighSiteTest extends BaseTest {
 
     @Test
     public void highSiteTest() {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
         boolean done = false;
         while (!done) {
             ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,50)");
             try {
-                if (wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#scroll-button"))))
-                        .isDisplayed()) {
+                if (new WebDriverWait(driver, 10).until(
+                                                         ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#scroll-button"))))
+                                                 .isDisplayed()) {
                     driver.findElement(By.cssSelector("#scroll-button")).click();
                     done = true;
                 }

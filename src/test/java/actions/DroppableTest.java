@@ -16,13 +16,13 @@ public class DroppableTest extends BaseTest {
 
     @Test
     public void droppableTest() {
-        DroppablePage page = new DroppablePage(driver);
-        Actions actions = new Actions(driver);
-        actions.clickAndHold(page.elementToDrag)
-                .moveToElement(page.elementToDrop)
+        DroppablePage droppablePage = new DroppablePage(driver);
+
+        new Actions(driver).clickAndHold(droppablePage.elementToDrag)
+                .moveToElement(droppablePage.elementToDrop)
                 .release()
                 .build()
                 .perform();
-        Assert.assertEquals(page.elementToDrop.getText(), "Dropped!");
+        Assert.assertEquals(droppablePage.elementToDrop.getText(), "Dropped!");
     }
 }

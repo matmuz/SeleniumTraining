@@ -19,14 +19,13 @@ public class SelectableTest extends BaseTest {
 
     @Test
     public void selectableTest() {
-        SelectablePage page = new SelectablePage(driver);
-        Actions actions = new Actions(driver);
-        for (WebElement selectableObject : page.selectableObjects) {
+        SelectablePage selectablePage = new SelectablePage(driver);
+        for (WebElement selectableObject : selectablePage.selectableObjects) {
             if (selectableObject.getText().contains("1") || selectableObject.getText().contains("3") ||
                     selectableObject.getText().contains("4")) {
-                actions.keyDown(Keys.CONTROL).click(selectableObject).build().perform();
+                new Actions(driver).keyDown(Keys.CONTROL).click(selectableObject).build().perform();
             }
         }
-        Assert.assertEquals(page.feedback.getText(), "You've selected: #1 #3 #4.");
+        Assert.assertEquals(selectablePage.feedback.getText(), "You've selected: #1 #3 #4.");
     }
 }

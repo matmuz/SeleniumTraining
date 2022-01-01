@@ -20,9 +20,10 @@ public class WindowsAndTabsTest extends BaseTest {
 
     @Test
     public void windowsAndTabsTest() {
-        WindowsAndTabsPage page = new WindowsAndTabsPage(driver);
+        WindowsAndTabsPage windowsAndTabsPage = new WindowsAndTabsPage(driver);
+
         String firstWindow = driver.getWindowHandle();
-        page.newBrowserWindow.click();
+        windowsAndTabsPage.newBrowserWindow.click();
         Set<String> handles = driver.getWindowHandles();
         for (String handle : handles) {
             if (!handle.equals(firstWindow)) {
@@ -33,7 +34,7 @@ public class WindowsAndTabsTest extends BaseTest {
         tableTest();
         driver.close();
         driver.switchTo().window(firstWindow);
-        page.newMessageWindow.click();
+        windowsAndTabsPage.newMessageWindow.click();
         handles = driver.getWindowHandles();
         for (String handle : handles) {
             if (!handle.equals(firstWindow)) {
@@ -43,7 +44,7 @@ public class WindowsAndTabsTest extends BaseTest {
         System.out.println(driver.findElement(By.cssSelector("body")).getText());
         driver.close();
         driver.switchTo().window(firstWindow);
-        page.newBrowserTab.click();
+        windowsAndTabsPage.newBrowserTab.click();
         handles = driver.getWindowHandles();
         for (String handle : handles) {
             if (!handle.equals(firstWindow)) {

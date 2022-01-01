@@ -10,8 +10,8 @@ import org.testng.annotations.Test;
 
 public class SliderTest extends BaseTest {
 
-    int[] conditions = {50, 80, 80, 20, 0};
-    WebElement slider;
+    private final int[] conditions = {50, 80, 80, 20, 0};
+    private WebElement slider;
 
     @BeforeMethod
     public void getPage() {

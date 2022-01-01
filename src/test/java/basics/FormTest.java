@@ -24,23 +24,25 @@ public class FormTest extends BaseTest {
     public void formTest() {
         File testFile = new File("src/test/resources/docTestPDFFill.pdf");
         String filePath =  testFile.getAbsolutePath();
-        FormPage page = new FormPage(driver);
-        page.firstName.sendKeys("Arthur");
-        page.lastName.sendKeys("Morgan");
-        page.email.sendKeys("test@test.com");
-        chooseRandom(page.sexRadioButtons);
-        page.age.sendKeys("26");
-        chooseRandom(page.yearsOfExperienceRadioButtons);
-        page.professionRadioButtons.get(1).click();
-        selectOptions(page.continents).selectByIndex(chooseRandom(selectOptions(page.continents).getOptions().size()));
+        FormPage formPage = new FormPage(driver);
+
+        formPage.firstName.sendKeys("Arthur");
+        formPage.lastName.sendKeys("Morgan");
+        formPage.email.sendKeys("test@test.com");
+        chooseRandom(formPage.sexRadioButtons);
+        formPage.age.sendKeys("26");
+        chooseRandom(formPage.yearsOfExperienceRadioButtons);
+        formPage.professionRadioButtons.get(1).click();
+        selectOptions(formPage.continents).selectByIndex(chooseRandom(selectOptions(
+                formPage.continents).getOptions().size()));
         String[] commandsToCheck = {"Browser Commands", "Wait Commands"};
         for (String s : commandsToCheck) {
-            selectOptions(page.commands).selectByVisibleText(s);
+            selectOptions(formPage.commands).selectByVisibleText(s);
         }
-        page.filePath.sendKeys(filePath);
-        page.additionalInfo.sendKeys("This is a test");
-        page.signInButton.click();
-        Assert.assertEquals(page.validatorMessage.getText(), "Form send with success");
+        formPage.filePath.sendKeys(filePath);
+        formPage.additionalInfo.sendKeys("This is a test");
+        formPage.signInButton.click();
+        Assert.assertEquals(formPage.validatorMessage.getText(), "Form send with success");
     }
 
     public void chooseRandom(List<WebElement> radios) {

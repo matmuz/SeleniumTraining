@@ -18,33 +18,33 @@ public class AlertsTests extends BaseTest {
 
     @Test
     public void alertsTests() {
+        AlertsPage alertsPage = new AlertsPage(driver);
 
-        AlertsPage page = new AlertsPage(driver);
-
-        page.simpleAlert.click();
+        alertsPage.simpleAlert.click();
         driver.switchTo().alert().accept();
-        Assert.assertEquals(page.simpleAlertLabel.getText(), "OK button pressed");
+        Assert.assertEquals(alertsPage.simpleAlertLabel.getText(), "OK button pressed");
 
-        page.promptAlert.click();
-        Alert temp = driver.switchTo().alert();
-        temp.sendKeys("Lord Voldemort");
-        temp.accept();
-        Assert.assertEquals(page.promptLabel.getText(), "Hello Lord Voldemort! How are you today?");
+        alertsPage.promptAlert.click();
+        Alert alertContainer = driver.switchTo().alert();
+        alertContainer.sendKeys("Lord Voldemort");
+        alertContainer.accept();
+        Assert.assertEquals(alertsPage.promptLabel.getText(), "Hello Lord Voldemort! How are you today?");
 
-        page.confirmAlert.click();
-        temp = driver.switchTo().alert();
-        temp.accept();
-        Assert.assertEquals(page.confirmLabel.getText(), "You pressed OK!");
-        page.confirmAlert.click();
-        temp = driver.switchTo().alert();
-        temp.dismiss();
-        Assert.assertEquals(page.confirmLabel.getText(), "You pressed Cancel!");
+        alertsPage.confirmAlert.click();
+        alertContainer = driver.switchTo().alert();
+        alertContainer.accept();
+        Assert.assertEquals(alertsPage.confirmLabel.getText(), "You pressed OK!");
 
-        page.delayedAlert.click();
+        alertsPage.confirmAlert.click();
+        alertContainer = driver.switchTo().alert();
+        alertContainer.dismiss();
+        Assert.assertEquals(alertsPage.confirmLabel.getText(), "You pressed Cancel!");
+
+        alertsPage.delayedAlert.click();
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.alertIsPresent());
-        temp = driver.switchTo().alert();
-        temp.accept();
-        Assert.assertEquals(page.delayedLabel.getText(), "OK button pressed");
+        alertContainer = driver.switchTo().alert();
+        alertContainer.accept();
+        Assert.assertEquals(alertsPage.delayedLabel.getText(), "OK button pressed");
     }
 }

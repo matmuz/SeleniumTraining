@@ -24,33 +24,36 @@ public class DatePickerTest extends BaseTest {
 
     @Test
     public void datePickerTest() throws IOException, UnsupportedFlavorException {
-
-        DatePickerPage page = new DatePickerPage(driver);
-        String localDate = page.reverseLocalDate(LocalDate.now().toString());
+        DatePickerPage datePickerPage = new DatePickerPage(driver);
+        String localDate = datePickerPage.reverseLocalDate(LocalDate.now().toString());
         String[] datesToCheck = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018", localDate, "10.10.2021"};
-
         for (int i = 0; i < datesToCheck.length; i++) {
-            page.datePickerField.click();
-            String[] date = page.splitTestedDate(datesToCheck, i);
-            if ((Integer.parseInt(date[2])) < (Integer.parseInt(page.year.getText()))) {
-                page.moveIntoDesiredDirection(i, page, LEFT, datesToCheck);
-            } else if ((Integer.parseInt(date[2])) == (Integer.parseInt(page.year.getText()))) {
-                if ((Integer.parseInt(date[1])) < (Integer.parseInt(page.convertMonthToNumber(page)))) {
-                    page.moveIntoDesiredDirection(i, page, LEFT, datesToCheck);
-                } else if ((Integer.parseInt(date[1])) > (Integer.parseInt(page.convertMonthToNumber(page)))) {
-                    page.moveIntoDesiredDirection(i, page, RIGHT, datesToCheck);
+            datePickerPage.datePickerField.click();
+            String[] date = datePickerPage.splitTestedDate(datesToCheck, i);
+            if ((Integer.parseInt(date[2])) < (Integer.parseInt(datePickerPage.year.getText()))) {
+                datePickerPage.moveIntoDesiredDirection(i, datePickerPage, LEFT, datesToCheck);
+            } else if ((Integer.parseInt(date[2])) == (Integer.parseInt(datePickerPage.year.getText()))) {
+                if ((Integer.parseInt(date[1])) < (Integer.parseInt(
+                        datePickerPage.convertMonthToNumber(datePickerPage)))) {
+                    datePickerPage.moveIntoDesiredDirection(i, datePickerPage, LEFT, datesToCheck);
+                } else if ((Integer.parseInt(date[1])) > (Integer.parseInt(
+                        datePickerPage.convertMonthToNumber(datePickerPage)))) {
+                    datePickerPage.moveIntoDesiredDirection(i, datePickerPage, RIGHT, datesToCheck);
                 } else {
                     try {
-                        page.highlighted.click();
+                        datePickerPage.highlighted.click();
                     } catch (NoSuchElementException ignored) {
                         driver.findElement(By.cssSelector(".ui-state-default.ui-state-active")).click();
                     }
                 }
             } else {
-                page.moveIntoDesiredDirection(i, page, RIGHT, datesToCheck);
+                datePickerPage.moveIntoDesiredDirection(i, datePickerPage, RIGHT, datesToCheck);
             }
-            System.out.println((page.convertToNonAmericanDate(page.getDateFromField(page))) + " compared to: " + datesToCheck[i]);
-            Assert.assertEquals((page.convertToNonAmericanDate(page.getDateFromField(page))), datesToCheck[i]);
+            System.out.println((datePickerPage.convertToNonAmericanDate(
+                    datePickerPage.getDateFromField(datePickerPage))) + " compared to: " + datesToCheck[i]);
+            Assert.assertEquals(
+                    (datePickerPage.convertToNonAmericanDate(datePickerPage.getDateFromField(datePickerPage))),
+                    datesToCheck[i]);
         }
     }
 }
