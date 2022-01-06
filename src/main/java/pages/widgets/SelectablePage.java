@@ -7,6 +7,8 @@ import pages.base.BasePage;
 
 public class SelectablePage extends BasePage {
 
+    public static final String SELECTS_PAGE = "https://seleniumui.moderntester.pl/selectmenu.php";
+
     public SelectablePage(WebDriver driver) {
         super(driver);
     }

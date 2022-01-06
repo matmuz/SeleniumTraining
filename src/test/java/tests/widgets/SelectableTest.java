@@ -8,7 +8,7 @@ import pages.widgets.SelectablePage;
 
 import java.util.Random;
 
-import static pages.actions.SelectablePage.SELECTS_PAGE;
+import static pages.widgets.SelectablePage.SELECTS_PAGE;
 
 public class SelectableTest extends BaseTest {
 
