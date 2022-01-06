@@ -9,6 +9,8 @@ import java.util.List;
 
 public class IFramesPage extends BasePage {
 
+    public static final String IFRAMES_PAGE = "https://seleniumui.moderntester.pl/iframes.php";
+
     public IFramesPage(WebDriver driver) {
         super(driver);
     }
@@ -39,4 +41,7 @@ public class IFramesPage extends BasePage {
 
     @FindBy(css = ".form-check")
     public List<WebElement> yearsOfExperienceRadioButtons;
+
+    @FindBy(css = ".nav-link.dropdown-toggle")
+    public WebElement pageElement;
 }

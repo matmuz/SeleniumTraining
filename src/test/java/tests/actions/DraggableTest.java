@@ -1,4 +1,4 @@
-package actions;
+package tests.actions;
 
 import base.BaseTest;
 import org.openqa.selenium.By;
@@ -6,11 +6,13 @@ import org.openqa.selenium.interactions.Actions;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static pages.actions.SortablePage.SORTABLE_PAGE;
+
 public class DraggableTest extends BaseTest {
 
     @BeforeMethod
     public void getPage() {
-        driver.get("https://seleniumui.moderntester.pl/draggable.php");
+        driver.get(SORTABLE_PAGE);
     }
 
     /*

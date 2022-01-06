@@ -7,6 +7,9 @@ import pages.base.BasePage;
 
 public class DroppablePage extends BasePage {
 
+    public static final String DROPPABLE_PAGE = "https://seleniumui.moderntester.pl/droppable.php";
+    public static final String DROPPED_MESSAGE = "Dropped!";
+
     public DroppablePage(WebDriver driver) {
         super(driver);
     }

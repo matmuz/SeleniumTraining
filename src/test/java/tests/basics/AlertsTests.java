@@ -1,19 +1,22 @@
-package basics;
+package tests.basics;
 
 import base.BaseTest;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.basics.AlertsPage;
+import waiter.Waiter;
+
+import static pages.basics.AlertsPage.*;
+import static utils.DataConstants.*;
 
 public class AlertsTests extends BaseTest {
 
     @BeforeMethod
     public void getPage() {
-        driver.get("https://seleniumui.moderntester.pl/alerts.php");
+        driver.get(ALERTS_PAGE);
     }
 
     @Test
@@ -22,29 +25,28 @@ public class AlertsTests extends BaseTest {
 
         alertsPage.simpleAlert.click();
         driver.switchTo().alert().accept();
-        Assert.assertEquals(alertsPage.simpleAlertLabel.getText(), "OK button pressed");
+        Assert.assertEquals(alertsPage.simpleAlertLabel.getText(), OK_PRESSED);
 
         alertsPage.promptAlert.click();
         Alert alertContainer = driver.switchTo().alert();
-        alertContainer.sendKeys("Lord Voldemort");
+        alertContainer.sendKeys(getFullName());
         alertContainer.accept();
-        Assert.assertEquals(alertsPage.promptLabel.getText(), "Hello Lord Voldemort! How are you today?");
+        Assert.assertEquals(alertsPage.promptLabel.getText(), getAlertResponseMessage(FIRSTNAME, LASTNAME));
 
         alertsPage.confirmAlert.click();
         alertContainer = driver.switchTo().alert();
         alertContainer.accept();
-        Assert.assertEquals(alertsPage.confirmLabel.getText(), "You pressed OK!");
+        Assert.assertEquals(alertsPage.confirmLabel.getText(), YOU_PRESSED_OK);
 
         alertsPage.confirmAlert.click();
         alertContainer = driver.switchTo().alert();
         alertContainer.dismiss();
-        Assert.assertEquals(alertsPage.confirmLabel.getText(), "You pressed Cancel!");
+        Assert.assertEquals(alertsPage.confirmLabel.getText(), CANCEL_PRESSED);
 
         alertsPage.delayedAlert.click();
-        WebDriverWait wait = new WebDriverWait(driver, 10);
-        wait.until(ExpectedConditions.alertIsPresent());
+        Waiter.wait(driver).until(ExpectedConditions.alertIsPresent());
         alertContainer = driver.switchTo().alert();
         alertContainer.accept();
-        Assert.assertEquals(alertsPage.delayedLabel.getText(), "OK button pressed");
+        Assert.assertEquals(alertsPage.delayedLabel.getText(), OK_PRESSED);
     }
 }

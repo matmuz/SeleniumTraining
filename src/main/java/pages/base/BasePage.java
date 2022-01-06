@@ -5,6 +5,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class BasePage {
 
+    public static final String MAIN_PAGE = "https://seleniumui.moderntester.pl/";
     protected WebDriver driver;
 
     public BasePage(WebDriver driver) {

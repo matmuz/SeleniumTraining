@@ -1,4 +1,4 @@
-package widgets;
+package tests.widgets;
 
 import base.BaseTest;
 import org.testng.Assert;
@@ -7,17 +7,20 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.widgets.ModalDialogPage;
 
+import static pages.widgets.ModalDialogPage.MODAL_DIALOG_PAGE;
+import static utils.DataConstants.*;
+
 public class ModalDialogTest extends BaseTest {
 
     @BeforeMethod
     @DataProvider(name = "data-provider")
     public Object[][] createProvider() {
-        return new Object[][]{{"Arthur Morgan", "arthurmorgan@gmail.com", "test123"}};
+        return new Object[][]{{getFullName(), EMAIL, PASSWORD}};
     }
 
     @BeforeMethod
     public void getPage() {
-        driver.get("https://seleniumui.moderntester.pl/modal-dialog.php");
+        driver.get(MODAL_DIALOG_PAGE);
     }
 
     @Test(dataProvider = "data-provider")

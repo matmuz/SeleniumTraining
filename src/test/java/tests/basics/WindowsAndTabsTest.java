@@ -1,4 +1,4 @@
-package basics;
+package tests.basics;
 
 import base.BaseTest;
 import org.openqa.selenium.By;
@@ -10,12 +10,16 @@ import pages.basics.WindowsAndTabsPage;
 import java.util.List;
 import java.util.Set;
 
+import static pages.basics.WindowsAndTabsPage.WINDOWS_AND_TABS;
+import static utils.MethodsProvider.clearRedundantElements;
+
 public class WindowsAndTabsTest extends BaseTest {
 
+    private final String countryToCheck = "Switzerland";
 
     @BeforeMethod
     public void getPage() {
-        driver.get("https://seleniumui.moderntester.pl/windows-tabs.php");
+        driver.get(WINDOWS_AND_TABS);
     }
 
     @Test
@@ -24,8 +28,8 @@ public class WindowsAndTabsTest extends BaseTest {
 
         String firstWindow = driver.getWindowHandle();
         windowsAndTabsPage.newBrowserWindow.click();
-        Set<String> handles = driver.getWindowHandles();
-        for (String handle : handles) {
+        Set<String> handlesContainer = driver.getWindowHandles();
+        for (String handle : handlesContainer) {
             if (!handle.equals(firstWindow)) {
                 driver.switchTo().window(handle);
             }
@@ -35,18 +39,18 @@ public class WindowsAndTabsTest extends BaseTest {
         driver.close();
         driver.switchTo().window(firstWindow);
         windowsAndTabsPage.newMessageWindow.click();
-        handles = driver.getWindowHandles();
-        for (String handle : handles) {
+        handlesContainer = driver.getWindowHandles();
+        for (String handle : handlesContainer) {
             if (!handle.equals(firstWindow)) {
                 driver.switchTo().window(handle);
             }
         }
-        System.out.println(driver.findElement(By.cssSelector("body")).getText());
+        System.out.println(windowsAndTabsPage.body.getText());
         driver.close();
         driver.switchTo().window(firstWindow);
         windowsAndTabsPage.newBrowserTab.click();
-        handles = driver.getWindowHandles();
-        for (String handle : handles) {
+        handlesContainer = driver.getWindowHandles();
+        for (String handle : handlesContainer) {
             if (!handle.equals(firstWindow)) {
                 driver.switchTo().window(handle);
             }
@@ -60,17 +64,13 @@ public class WindowsAndTabsTest extends BaseTest {
         for (WebElement peak : peaks) {
             String[] columns = peak.getText().split(" ");
             for (String column : columns) {
-                if ((column.contains("Switzerland"))) {
+                if ((column.contains(countryToCheck))) {
                     int height = Integer.parseInt(columns[columns.length - 1]);
                     if (height > 4000) {
-                        System.out.println(columns[0] + " " + columns[1] + " " + columns[2]);
+                        System.out.println(columns[0] + ". " + columns[1] + " - " + columns[2]);
                     }
                 }
             }
         }
-    }
-
-    public void clearRedundantElements(List<WebElement> list) {
-        list.subList(0, 2).clear();
     }
 }

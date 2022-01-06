@@ -7,6 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
+import static pages.base.BasePage.MAIN_PAGE;
+
 public class BaseTest {
 
     private ChromeDriverManager driverManager;
@@ -16,6 +18,7 @@ public class BaseTest {
     public void setUp() {
         driverManager = DriverManagerFactory.getManager(Browsers.CHROME);
         driver = driverManager.getDriver();
+        driver.get(MAIN_PAGE);
     }
 
     @AfterMethod

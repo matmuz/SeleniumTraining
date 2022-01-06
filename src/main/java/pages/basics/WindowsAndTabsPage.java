@@ -7,6 +7,8 @@ import pages.base.BasePage;
 
 public class WindowsAndTabsPage extends BasePage {
 
+    public static final String WINDOWS_AND_TABS = "https://seleniumui.moderntester.pl/windows-tabs.php";
+
     public WindowsAndTabsPage(WebDriver driver) {
         super(driver);
     }
@@ -19,4 +21,7 @@ public class WindowsAndTabsPage extends BasePage {
 
     @FindBy(css = "#newBrowserTab")
     public WebElement newBrowserTab;
+
+    @FindBy(css = "body")
+    public WebElement body;
 }

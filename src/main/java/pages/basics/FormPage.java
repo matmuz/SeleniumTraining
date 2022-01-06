@@ -9,6 +9,9 @@ import java.util.List;
 
 public class FormPage extends BasePage {
 
+    public static final String FORM_PAGE_URL = "https://seleniumui.moderntester.pl/form.php";
+    public static final String FORM_SUCCESS = "Form send with success";
+
     public FormPage(WebDriver driver) {
         super(driver);
     }

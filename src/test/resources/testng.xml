@@ -5,41 +5,41 @@
 
     <test name="Actions">
         <classes>
-            <class name="actions.DraggableTest"/>
-            <class name="actions.DroppableTest"/>
-            <class name="actions.ResizableTest"/>
-            <class name="actions.SelectableTest"/>
-            <class name="actions.SortableTest"/>
+            <class name="tests.actions.DraggableTest"/>
+            <class name="tests.actions.DroppableTest"/>
+            <class name="tests.actions.ResizableTest"/>
+            <class name="tests.actions.SelectableTest"/>
+            <class name="tests.actions.SortableTest"/>
         </classes>
     </test>
 
     <test name="Basics">
         <classes>
-            <class name="basics.AlertsTests"/>
-            <class name="basics.FormTest"/>
-            <class name="basics.IFramesTest"/>
-            <class name="basics.TableTest"/>
-            <class name="basics.WindowsAndTabsTest"/>
+            <class name="tests.basics.AlertsTests"/>
+            <class name="tests.basics.FormTest"/>
+            <class name="tests.basics.IFramesTest"/>
+            <class name="tests.basics.TableTest"/>
+            <class name="tests.basics.WindowsAndTabsTest"/>
         </classes>
     </test>
 
     <test name="Others">
         <classes>
-            <class name="others.HighSiteTest"/>
+            <class name="tests.others.HighSiteTest"/>
         </classes>
     </test>
 
     <test name="Widgets">
         <classes>
-            <class name="widgets.AccordionTest"/>
-            <class name="widgets.AutocompleteTest"/>
-            <class name="widgets.DatePickerTest"/>
-            <class name="widgets.MenuTest"/>
-            <class name="widgets.ModalDialogTest"/>
-            <class name="widgets.ProgressbarTest"/>
-            <class name="widgets.SelectableTest"/>
-            <class name="widgets.SliderTest"/>
-            <class name="widgets.TooltipTest"/>
+            <class name="tests.widgets.AccordionTest"/>
+            <class name="tests.widgets.AutocompleteTest"/>
+            <class name="tests.widgets.DatePickerTest"/>
+            <class name="tests.widgets.MenuTest"/>
+            <class name="tests.widgets.ModalDialogTest"/>
+            <class name="tests.widgets.ProgressbarTest"/>
+            <class name="tests.widgets.SelectableTest"/>
+            <class name="tests.widgets.SliderTest"/>
+            <class name="tests.widgets.TooltipTest"/>
         </classes>
     </test>
 

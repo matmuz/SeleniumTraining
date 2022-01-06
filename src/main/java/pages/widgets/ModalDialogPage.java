@@ -9,6 +9,8 @@ import java.util.List;
 
 public class ModalDialogPage extends BasePage {
 
+    public static final String MODAL_DIALOG_PAGE = "https://seleniumui.moderntester.pl/modal-dialog.php";
+
     public ModalDialogPage(WebDriver driver) {
         super(driver);
     }

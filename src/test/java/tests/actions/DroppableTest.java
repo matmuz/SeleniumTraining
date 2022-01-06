@@ -1,4 +1,4 @@
-package actions;
+package tests.actions;
 
 import base.BaseTest;
 import org.openqa.selenium.interactions.Actions;
@@ -7,11 +7,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.actions.DroppablePage;
 
+import static pages.actions.DroppablePage.DROPPABLE_PAGE;
+import static pages.actions.DroppablePage.DROPPED_MESSAGE;
+
 public class DroppableTest extends BaseTest {
 
     @BeforeMethod
     public void getPage() {
-        driver.get("https://seleniumui.moderntester.pl/droppable.php");
+        driver.get(DROPPABLE_PAGE);
     }
 
     @Test
@@ -23,6 +26,6 @@ public class DroppableTest extends BaseTest {
                 .release()
                 .build()
                 .perform();
-        Assert.assertEquals(droppablePage.elementToDrop.getText(), "Dropped!");
+        Assert.assertEquals(droppablePage.elementToDrop.getText(), DROPPED_MESSAGE);
     }
 }

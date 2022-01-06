@@ -1,4 +1,4 @@
-package actions;
+package tests.actions;
 
 import base.BaseTest;
 import org.openqa.selenium.Keys;
@@ -9,12 +9,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.actions.SelectablePage;
 
+import static pages.actions.SelectablePage.SELECTABLE_PAGE;
+
 public class SelectableTest extends BaseTest {
 
 
     @BeforeMethod
     public void getPage() {
-        driver.get("https://seleniumui.moderntester.pl/selectable.php");
+        driver.get(SELECTABLE_PAGE);
     }
 
     @Test

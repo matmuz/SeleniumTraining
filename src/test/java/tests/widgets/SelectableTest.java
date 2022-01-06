@@ -1,4 +1,4 @@
-package widgets;
+package tests.widgets;
 
 import base.BaseTest;
 import org.openqa.selenium.support.ui.Select;
@@ -8,11 +8,13 @@ import pages.widgets.SelectablePage;
 
 import java.util.Random;
 
+import static pages.actions.SelectablePage.SELECTS_PAGE;
+
 public class SelectableTest extends BaseTest {
 
     @BeforeMethod
     public void getPage() {
-        driver.get("https://seleniumui.moderntester.pl/selectmenu.php");
+        driver.get(SELECTS_PAGE);
     }
 
     /*

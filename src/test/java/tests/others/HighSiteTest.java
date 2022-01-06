@@ -1,13 +1,13 @@
-package others;
+package tests.others;
 
 import base.BaseTest;
-import org.openqa.selenium.*;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import waiter.Waiter;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,9 +25,9 @@ public class HighSiteTest extends BaseTest {
         while (!done) {
             ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,50)");
             try {
-                if (new WebDriverWait(driver, 10).until(
-                                                         ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#scroll-button"))))
-                                                 .isDisplayed()) {
+                if (Waiter.wait(driver)
+                          .until(ExpectedConditions.visibilityOf(driver.findElement(By.cssSelector("#scroll-button"))))
+                          .isDisplayed()) {
                     driver.findElement(By.cssSelector("#scroll-button")).click();
                     done = true;
                 }
@@ -40,7 +40,7 @@ public class HighSiteTest extends BaseTest {
     public void takeScreenshot() throws IOException {
         TakesScreenshot screenshot = ((TakesScreenshot) driver);
         File file = screenshot.getScreenshotAs(OutputType.FILE);
-        File destination = new File("src/test/java/others/test.png");
+        File destination = new File("src/test/java/tests/others/test.png");
         FileUtils.copyFile(file, destination);
     }
 }

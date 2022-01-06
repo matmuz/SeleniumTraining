@@ -1,19 +1,17 @@
-package basics;
+package tests.basics;
 
 import base.BaseTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
+import static utils.MethodsProvider.clearRedundantElements;
+
 public class TableTest extends BaseTest {
 
-    @BeforeMethod
-    public void getPage() {
-        driver.get("https://seleniumui.moderntester.pl/");
-    }
+    private final String countryToCheck = "Switzerland";
 
     @Test
     public void tableTest() {
@@ -22,7 +20,7 @@ public class TableTest extends BaseTest {
         for (WebElement peak : peaks) {
             String[] columns = peak.getText().split(" ");
             for (String column : columns) {
-                if ((column.contains("Switzerland"))) {
+                if ((column.contains(countryToCheck))) {
                     int height = Integer.parseInt(columns[columns.length - 1]);
                     if (height > 4000) {
                         System.out.println(columns[0] + ". " + columns[1] + " - " + columns[2]);
@@ -30,9 +28,5 @@ public class TableTest extends BaseTest {
                 }
             }
         }
-    }
-
-    public void clearRedundantElements(List<WebElement> list) {
-        list.subList(0, 2).clear();
     }
 }

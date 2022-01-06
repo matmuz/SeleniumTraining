@@ -1,4 +1,4 @@
-package widgets;
+package tests.widgets;
 
 import base.BaseTest;
 import org.openqa.selenium.By;
@@ -12,14 +12,13 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import static pages.widgets.DatePickerPage.LEFT;
-import static pages.widgets.DatePickerPage.RIGHT;
+import static pages.widgets.DatePickerPage.*;
 
 public class DatePickerTest extends BaseTest {
 
     @BeforeMethod
     public void getPage() {
-        driver.get("https://seleniumui.moderntester.pl/datepicker.php");
+        driver.get(DATEPICKER_PAGE);
     }
 
     @Test

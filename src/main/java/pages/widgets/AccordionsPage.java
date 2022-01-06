@@ -9,6 +9,8 @@ import java.util.List;
 
 public class AccordionsPage extends BasePage {
 
+    public static final String ACCORDION_PAGE = "https://seleniumui.moderntester.pl/accordion.php";
+
     public AccordionsPage(WebDriver driver) {
         super(driver);
     }

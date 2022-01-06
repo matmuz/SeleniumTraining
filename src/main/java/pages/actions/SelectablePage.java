@@ -9,6 +9,8 @@ import java.util.List;
 
 public class SelectablePage extends BasePage {
 
+    public static final String SELECTS_PAGE = "https://seleniumui.moderntester.pl/selectable.php";
+
     public SelectablePage(WebDriver driver) {
         super(driver);
     }

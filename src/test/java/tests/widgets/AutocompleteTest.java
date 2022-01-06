@@ -1,4 +1,4 @@
-package widgets;
+package tests.widgets;
 
 import base.BaseTest;
 import org.openqa.selenium.By;
@@ -14,7 +14,9 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
+
+import static utils.MethodsProvider.RANDOM;
+import static utils.MethodsProvider.chooseRandom;
 
 public class AutocompleteTest extends BaseTest {
 
@@ -31,8 +33,7 @@ public class AutocompleteTest extends BaseTest {
         for (WebElement option : options) {
             System.out.println(option.getText());
         }
-        Random random = new Random();
-        int option = random.nextInt(options.size());
+        int option = chooseRandom(options.size(), RANDOM);
         String stringOption = options.get(option).getText();
         options.get(option).click();
         search.sendKeys(Keys.CONTROL, "a");
