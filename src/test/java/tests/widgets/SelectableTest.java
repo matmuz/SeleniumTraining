@@ -24,7 +24,7 @@ public class SelectableTest extends BaseTest {
 
     @Test
     public void selectMenuTest() {
-        boolean issue = true;
+        boolean issue = false;
         if (issue) {
             return;
         }

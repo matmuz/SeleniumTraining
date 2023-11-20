@@ -19,7 +19,7 @@ import java.util.List;
 
 public class DatePickerPage extends BasePage {
 
-    public static final String DATEPICKER_PAGE = "https://seleniumui.moderntester.pl/datepicker.php";
+    public static final String DATEPICKER_PAGE = "http://seleniumui.moderntester.pl/datepicker.php";
     public static final List<Month> MONTHS = Arrays.asList(Month.values());
     public static final String LEFT = "left";
     public static final String RIGHT = "right";

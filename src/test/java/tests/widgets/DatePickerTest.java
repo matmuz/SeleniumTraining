@@ -1,58 +1,81 @@
 package tests.widgets;
 
-import base.BaseTest;
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
-import org.testng.Assert;
+import driver.ChromeDriverManager;
+import driver.DriverManagerFactory;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import pages.widgets.DatePickerPage;
 
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.time.LocalDate;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
-import static pages.widgets.DatePickerPage.*;
+import static java.time.Duration.ofSeconds;
+import static org.openqa.selenium.By.cssSelector;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.testng.Assert.assertEquals;
 
-public class DatePickerTest extends BaseTest {
+public class DatePickerTest {
+
+    private ChromeDriverManager driverManager;
+    private WebDriver driver;
 
     @BeforeMethod
-    public void getPage() {
-        driver.get(DATEPICKER_PAGE);
+    public void setUp() {
+        driverManager = DriverManagerFactory.getManager();
+        driver = driverManager.getDriver();
+        driver.get("http://seleniumui.moderntester.pl/datepicker.php");
     }
 
     @Test
-    public void datePickerTest() throws IOException, UnsupportedFlavorException {
-        DatePickerPage datePickerPage = new DatePickerPage(driver);
-        String localDate = datePickerPage.reverseLocalDate(LocalDate.now().toString());
-        String[] datesToCheck = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018", localDate, "10.10.2021"};
-        for (int i = 0; i < datesToCheck.length; i++) {
-            datePickerPage.datePickerField.click();
-            String[] date = datePickerPage.splitTestedDate(datesToCheck, i);
-            if ((Integer.parseInt(date[2])) < (Integer.parseInt(datePickerPage.year.getText()))) {
-                datePickerPage.moveIntoDesiredDirection(i, datePickerPage, LEFT, datesToCheck);
-            } else if ((Integer.parseInt(date[2])) == (Integer.parseInt(datePickerPage.year.getText()))) {
-                if ((Integer.parseInt(date[1])) < (Integer.parseInt(
-                        datePickerPage.convertMonthToNumber(datePickerPage)))) {
-                    datePickerPage.moveIntoDesiredDirection(i, datePickerPage, LEFT, datesToCheck);
-                } else if ((Integer.parseInt(date[1])) > (Integer.parseInt(
-                        datePickerPage.convertMonthToNumber(datePickerPage)))) {
-                    datePickerPage.moveIntoDesiredDirection(i, datePickerPage, RIGHT, datesToCheck);
-                } else {
-                    try {
-                        datePickerPage.highlighted.click();
-                    } catch (NoSuchElementException ignored) {
-                        driver.findElement(By.cssSelector(".ui-state-default.ui-state-active")).click();
-                    }
-                }
-            } else {
-                datePickerPage.moveIntoDesiredDirection(i, datePickerPage, RIGHT, datesToCheck);
+    public void datePickerTest() throws ParseException {
+        DateFormat givenFormat = new SimpleDateFormat("dd.MM.yyyy");
+        DateFormat datePickerFormat = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
+        DateFormat displayedFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+        String[] datesToCheck = {"30.10.2018", "25.09.2018", "25.09.2018", "01.01.2018", "01.02.2018",
+                givenFormat.format(new Date()), "10.10.2021"};
+
+        for (String dateToCheck : datesToCheck) {
+
+            String formattedExpectedDate = displayedFormat.format(givenFormat.parse(dateToCheck));
+
+            driver.findElement(cssSelector("#datepicker")).click();
+            WebDriverWait wait = new WebDriverWait(driver, ofSeconds(5));
+            wait.until(elementToBeClickable(driver.findElement(cssSelector(".ui-datepicker-title"))));
+
+            Date dateToCheckAsDate = datePickerFormat.parse(datePickerFormat.format(givenFormat.parse(dateToCheck)));
+            Date displayedDateAsDate = datePickerFormat.parse(driver.findElement(cssSelector(".ui-datepicker-title"))
+                                                                    .getText());
+
+            String singleDay = dateToCheck.substring(0, dateToCheck.indexOf("."));
+
+            while (dateToCheckAsDate.compareTo(displayedDateAsDate) < 0) {
+                driver.findElement(cssSelector(".ui-icon.ui-icon-circle-triangle-w")).click();
+                displayedDateAsDate = datePickerFormat.parse(driver.findElement(cssSelector(".ui-datepicker-title"))
+                                                                   .getText());
             }
-            System.out.println((datePickerPage.convertToNonAmericanDate(
-                    datePickerPage.getDateFromField(datePickerPage))) + " compared to: " + datesToCheck[i]);
-            Assert.assertEquals(
-                    (datePickerPage.convertToNonAmericanDate(datePickerPage.getDateFromField(datePickerPage))),
-                    datesToCheck[i]);
+            while (dateToCheckAsDate.compareTo(displayedDateAsDate) > 0) {
+                driver.findElement(cssSelector(".ui-icon.ui-icon-circle-triangle-e")).click();
+                displayedDateAsDate = datePickerFormat.parse(driver.findElement(cssSelector(".ui-datepicker-title"))
+                                                                   .getText());
+            }
+            driver.findElements(cssSelector(".ui-state-default.ui-state-highlight, .ui-state-default.ui-state-active," +
+                                                    " a[class='ui-state-default']"))
+                  .get(Integer.parseInt(singleDay) - 1)
+                  .click();
+
+            assertEquals(driver.findElement(cssSelector("#datepicker")).getAttribute("value"),
+                         formattedExpectedDate);
         }
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        driverManager.quitDriver(driver);
     }
 }

@@ -35,8 +35,8 @@ public class FormTest extends BaseTest {
         formPage.age.sendKeys(AGE);
         chooseRandom(formPage.yearsOfExperienceRadioButtons, RANDOM);
         formPage.professionRadioButtons.get(1).click();
-        selectOptions(formPage.continents).selectByIndex(chooseRandom(selectOptions(
-                formPage.continents).getOptions().size(), RANDOM));
+        selectOptions(formPage.continents).selectByIndex(
+                chooseRandom(selectOptions(formPage.continents).getOptions().size(), RANDOM));
         for (String s : commandsToCheck) {
             selectOptions(formPage.commands).selectByVisibleText(s);
         }

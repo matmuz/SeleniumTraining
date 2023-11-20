@@ -1,13 +1,10 @@
 package base;
 
-import driver.Browsers;
 import driver.ChromeDriverManager;
 import driver.DriverManagerFactory;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-
-import static pages.base.BasePage.MAIN_PAGE;
 
 public class BaseTest {
 
@@ -16,9 +13,9 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        driverManager = DriverManagerFactory.getManager(Browsers.CHROME);
+        driverManager = DriverManagerFactory.getManager();
         driver = driverManager.getDriver();
-        driver.get(MAIN_PAGE);
+        driver.get("https://the-internet.herokuapp.com/challenging_dom");
     }
 
     @AfterMethod
